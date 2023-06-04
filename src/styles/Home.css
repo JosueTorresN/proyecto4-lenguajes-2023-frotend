@@ -1,0 +1,196 @@
+:root {
+    --bg: #3C465C;
+    --primary: #411fff;
+    --solid: #fff;
+    --btn-w: 10em;
+    --dot-w: calc(var(--btn-w)*.2);
+    --tr-X: calc(var(--btn-w) - var(--dot-w));
+  }
+
+* {box-sizing: border-box;}
+*:before, *:after {box-sizing: border-box;}
+
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: space-between;
+    justify-content: center;
+    height: 250px;
+    width: 400px;
+}
+
+.nameForm {
+    background-color: var(--bg);
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    align-content: space-between;
+    color: var(--solid);
+    border-radius: 10em;
+    /* justify-content: flex-start; */
+}
+
+.input-group {
+    margin: 25px 0;
+    position: relative;
+}
+
+.input-group input {
+    width: 300px;
+    padding: 15px;
+    background-color: ryba(255, 255, 255, 0.5);
+    color: var(--primary);
+    /* outline: none; */
+    border: none;
+    border-radius: 10em;
+
+    background: var(--solid);
+    outline: 0px;
+}
+
+
+.input-group .lbl-nombre{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    border-bottom: 1px solid #c7c7c7;
+}
+
+label {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #111;
+    pointer-events: none;
+}
+
+label span {
+    display: inline-block;
+    transition: transform 0.2s, color 0.3s;
+}
+
+.btnContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: space-between;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.btn {
+    position: relative;
+    margin: 0 auto;
+    width: var(--btn-w);
+    color: var(--primary);
+    border: .15em solid var(--primary);
+    border-radius: 5em;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 1.3em;
+    line-height: 2em;
+    cursor: pointer;  
+  }
+  .dot {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: var(--dot-w);
+    height: 100%;
+    border-radius: 100%;
+    transition: all 300ms ease;
+    display: none;
+  }
+  .dot:after {
+    content: '';
+    position: absolute;
+    left: calc(50% - .4em);
+    top: -.4em;
+    height: .8em;
+    width: .8em;
+    background: var(--primary);
+    border-radius: 1em;
+    border: .25em solid var(--solid);
+    box-shadow: 0 0 .7em var(--solid),
+          0 0 2em var(--primary);
+  }
+  .btn:hover .dot,
+  .btn:focus .dot {
+    animation: atom 2s infinite linear;
+    display: block;
+  }
+  @keyframes atom {
+    0% {transform: translateX(0) rotate(0);}
+    30%{transform: translateX(var(--tr-X)) rotate(0);}
+    50% {transform: translateX(var(--tr-X)) rotate(180deg);}
+    80% {transform: translateX(0) rotate(180deg);}
+    100% {transform: translateX(0) rotate(360deg);}
+  }
+
+.datosForm {
+    background-color: var(--bg);
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--solid);
+    border-radius: 5em;
+    /* justify-content: flex-start; */
+}
+
+.tituloPagina {
+    font-size: 2em;
+    /* margin-top: 2em; */
+    margin-bottom: 5%;
+}
+
+.mainContainer2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: space-between;
+    justify-content: center;
+    height: auto;
+    width: 400px;
+}
+
+.selectTipo {
+    width: 300px;
+    padding: 15px;
+    background-color: ryba(255, 255, 255, 0.5);
+    color: var(--primary);
+    /* outline: none; */
+    border: none;
+    border-radius: 10em;
+
+    background: var(--solid);
+    outline: 0px;
+}
+
+.selectTematica {
+    width: 300px;
+    padding: 15px;
+    background-color: ryba(255, 255, 255, 0.5);
+    color: var(--primary);
+    /* outline: none; */
+    border: none;
+    border-radius: 10em;
+
+    background: var(--solid);
+    outline: 0px;
+}

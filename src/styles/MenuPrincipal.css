@@ -1,0 +1,21 @@
+:root {
+    --bg: #3C465C;
+    --primary: #411fff;
+    --solid: #fff;
+    --btn-w: 10em;
+    --dot-w: calc(var(--btn-w)*.2);
+    --tr-X: calc(var(--btn-w) - var(--dot-w));
+  }
+
+* {box-sizing: border-box;}
+*:before, *:after {box-sizing: border-box;}
+
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: space-between;
+    justify-content: center;
+    height: 250px;
+    width: 400px;
+}
