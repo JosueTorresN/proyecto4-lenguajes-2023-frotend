@@ -1,5 +1,11 @@
 import React from "react";
+import { io } from "socket.io-client";
 
+// const socket = io('https://2d01-186-15-239-14.ngrok-free.app/');
+
+const enviarDatos = () => {
+    // socket.emit('createParty', 'hola');
+}
 
 const OpcionesJuego = () => {
     const [tipo, setTipo] = React.useState('VS');
@@ -17,7 +23,7 @@ const OpcionesJuego = () => {
     return (
         <div className='mainContainer2'>
             <h1 className="tituloPagina">Opciones de juego</h1>
-            <form className='datosForm'>
+            <form className='datosForm' onSubmit={enviarDatos}>
                 <div className="input-group">
                     <input type="text" placeholder=" " />
                     <label className='lbl-nombre'> <span className="text-nomb">Nombre de la sala</span> </label>

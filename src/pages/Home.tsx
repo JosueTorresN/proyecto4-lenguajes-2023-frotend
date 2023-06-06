@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Navigate } from "react-router-dom";
 import '../styles/Home.css';
 
 interface UserFormProps {
@@ -8,13 +9,18 @@ interface UserFormProps {
   
   const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
     const [username, setUsername] = React.useState('');
+    const [navigate, setNavigate] = React.useState(false);
   
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
   
       try {
-        await axios.post('/api/users', { username });
-        onSubmit(username);
+        await axios.post(`https://0e11-186-15-239-14.ngrok-free.app/log/${username}`)
+        .then((response) => {
+          console.log(response.data);
+          setNavigate(response.data.reespuesta);
+          onSubmit(username);
+        });
       } catch (error) {
         console.error(error);
       }
@@ -22,6 +28,11 @@ interface UserFormProps {
   
     return (
         <div className='mainContainer'>
+          <div>
+            {navigate && (
+            <Navigate to="/menu" replace={true} />
+            )}
+          </div>
             <form onSubmit={handleSubmit} className='nameForm'>
             <div className="input-group"> 
                 <input type="text" placeholder=" " value={username} onChange={(event) => setUsername(event.target.value)} />
