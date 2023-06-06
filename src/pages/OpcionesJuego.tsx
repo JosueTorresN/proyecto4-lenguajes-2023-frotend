@@ -1,11 +1,16 @@
 import React from "react";
-import { io } from "socket.io-client";
+import io from "socket.io-client";
 
-// const socket = io('https://2d01-186-15-239-14.ngrok-free.app/');
+const socket = io('http://localhost:4000');
+
+socket.on('connect', () => {
+    console.log('Connected to server');
+});
 
 const enviarDatos = () => {
     // socket.emit('createParty', 'hola');
 }
+
 
 const OpcionesJuego = () => {
     const [tipo, setTipo] = React.useState('VS');

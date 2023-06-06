@@ -15,7 +15,7 @@ interface UserFormProps {
       event.preventDefault();
   
       try {
-        await axios.post(`https://0e11-186-15-239-14.ngrok-free.app/log/${username}`)
+        await axios.get(`http://localhost:4000/log/${username}`)
         .then((response) => {
           console.log(response.data);
           setNavigate(response.data.reespuesta);

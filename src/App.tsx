@@ -2,6 +2,7 @@ import React from 'react';
 import Home from './pages/Home';
 import MenuPrincipal from './pages/MenuPrincipal';
 import OpcionesJuego from './pages/OpcionesJuego';
+import GameBoard from './pages/GameBoard';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import './App.css';
 
@@ -13,6 +14,7 @@ function App() {
           <Route path="/"  element={<Home />} />
           <Route path="/menu"  element={<MenuPrincipal />} />
           <Route path="/opciones-juego"  element={<OpcionesJuego />} />
+          <Route path="/game-board"  element={<GameBoard />} />
           {/* <Route path="/about" component={About} /> */}
         </Routes>
       </Router>
