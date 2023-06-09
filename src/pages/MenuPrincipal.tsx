@@ -15,7 +15,7 @@ const MenuPrincipal = () => {
             </button>
           </div>
           <div className='btnContainer'>
-            <button className="btn">
+            <button className="btn" onClick={() => navigate('/union-game')}>
               <span>Unirse a partida</span>
               <div className="dot"></div>
             </button>

@@ -194,3 +194,26 @@ label span {
     background: var(--solid);
     outline: 0px;
 }
+
+.gameboar-main-container {
+    display: grid;
+    grid-template-columns: 25% 50% 25%;
+    gap: 10px;
+    background-color: #2196F3;
+    padding: 10px;
+}
+
+.titulo-gameboard {
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+.play-board {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto;
+}
+
+/* .btn-class-game {
+    height: 25px;
+    width: 25%;
+} */
