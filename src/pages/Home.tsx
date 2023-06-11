@@ -10,6 +10,10 @@ interface UserFormProps {
   const UserForm: React.FC<UserFormProps> = ({ onSubmit }) => {
     const [username, setUsername] = React.useState('');
     const [navigate, setNavigate] = React.useState(false);
+
+    React.useEffect(() => {
+      localStorage.clear();
+    } , []);
   
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
@@ -18,6 +22,7 @@ interface UserFormProps {
         await axios.get(`http://localhost:4000/log/${username}`)
         .then((response) => {
           console.log(response.data);
+          localStorage.setItem('name', username);
           setNavigate(response.data.reespuesta);
           onSubmit(username);
         });
@@ -30,7 +35,7 @@ interface UserFormProps {
         <div className='mainContainer'>
           <div>
             {navigate && (
-            <Navigate to="/menu" replace={true} />
+            <Navigate to={`/game/${username}/menu`} replace={true} />
             )}
           </div>
             <form onSubmit={handleSubmit} className='nameForm'>

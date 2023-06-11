@@ -1,13 +1,14 @@
 import React from 'react';
 import socket from "../Conecciones.js";
-import { Navigate } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 
 const UnircePartida = () => {
     const [nombre, setNombre] = React.useState('');
     const [pass, setPass] = React.useState(false);
+    const { name } = useParams();
 
     const enviarDatos = () => {
-        socket.emit('unionParty', {nombre: 'Juan', roomName: nombre});
+        socket.emit('unionParty', {nombre: name, roomName: nombre});
         setPass(true);
     }
 
@@ -29,7 +30,7 @@ const UnircePartida = () => {
         <div className='mainContainer2'>
             <div>
             {pass && (
-            <Navigate to="/game-board" replace={true} />
+            <Navigate to={`/game/${name}/game-board`} replace={true} />
             )}
             </div>
             <h1 className="tituloPagina">Opciones de juego</h1>

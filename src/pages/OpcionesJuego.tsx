@@ -1,6 +1,6 @@
 import React from "react";
 import socket from "../Conecciones.js";
-import { Navigate } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 
 // import io from "socket.io-client";
 
@@ -16,11 +16,12 @@ const OpcionesJuego = () => {
     const [tematica, setTematica] = React.useState('estandar');
     const [nombre, setNombre] = React.useState('');
     const [pass, setPass] = React.useState(false);
+    const { name } = useParams();
 
     const enviarDatos = () => {
         socket.emit('createParty', {
             nombre: nombre,
-            nombreJugador: 'Jugador 1',
+            nombreJugador: name,
         });
     }
 
@@ -52,7 +53,7 @@ const OpcionesJuego = () => {
         <div className='mainContainer2'>
             <div>
             {pass && (
-            <Navigate to="/game-board" replace={true} />
+            <Navigate to={`/game/${name}/game-board`} replace={true} />
             )}
             </div>
             <h1 className="tituloPagina">Opciones de juego</h1>

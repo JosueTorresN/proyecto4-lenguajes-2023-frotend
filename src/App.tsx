@@ -13,11 +13,13 @@ function App() {
       <Router>
         <Routes>
           <Route path="/"  element={<Home />} />
-          <Route path="/menu"  element={<MenuPrincipal />} />
-          <Route path="/opciones-juego"  element={<OpcionesJuego />} />
-          <Route path="/game-board"  element={<GameBoard />} />
-          <Route path="/union-game"  element={<UnircePartida />} />
-          {/* <Route path="/about" component={About} /> */}
+          <Route path="/game" >
+            <Route path=":name/menu"  element={<MenuPrincipal />} />
+            <Route path=":name/opciones-juego"  element={<OpcionesJuego />} />
+            <Route path=":name/game-board"  element={<GameBoard />} />
+            <Route path=":name/union-game"  element={<UnircePartida />} />
+          </Route>
+
         </Routes>
       </Router>
     </div>
