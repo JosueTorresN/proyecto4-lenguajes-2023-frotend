@@ -213,7 +213,12 @@ label span {
     grid-template-columns: auto auto auto auto auto auto auto auto auto;
 }
 
-/* .btn-class-game {
+.btn-class-game {
+    height: 50px;
+    width: 50px;
+}
+
+.btn-game-board {
     height: 25px;
     width: 25%;
-} */
+}
