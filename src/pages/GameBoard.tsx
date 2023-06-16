@@ -103,25 +103,14 @@ const GameBoard = () => {
       setPartyInfo(lista);
     };
 
+    const extraerDatos = () => {
+          
+      socket.emit("partyInfo", {roomName: 'room1'});
+      socket.emit("sendTablero", {roomName: 'room1'});
+    }
 
     React.useEffect(() => {
-        // Función que se ejecuta cada segundo
-        const countdown = setInterval(() => {
-          if (timer > 0) {
-            setTimer(timer - 1);
-          } else {
-            clearInterval(countdown);
-            // socket.emit("finishGame", {roomName: 'room1',jugadores: partyInfo});
-            // Aquí puedes mostrar el mensaje cuando el cronómetro llega a cero
-            alert('¡Tiempo agotado!');
-          }
-        }, 1000);
-
-        const extraerDatos = () => {
-          
-          socket.emit("partyInfo", {roomName: 'room1'});
-          socket.emit("sendTablero", {roomName: 'room1'});
-        }
+        extraerDatos();
         socket.on("sendTablero", (data) => {
             // console.log(data);
             setTablero(data);
@@ -142,8 +131,21 @@ const GameBoard = () => {
             console.log("captarMovimiento: ",data);
             setTablero(data.data)
         });
+
+          // Función que se ejecuta cada segundo
+        const countdown = setInterval(() => {
+          if (timer > 0) {
+            setTimer(timer - 1);
+          } else {
+            clearInterval(countdown);
+            // socket.emit("finishGame", {roomName: 'room1',jugadores: partyInfo});
+            // Aquí puedes mostrar el mensaje cuando el cronómetro llega a cero
+            alert('¡Tiempo agotado!');
+          }
+        }, 1000);
+  
         return () => {
-          clearInterval(countdown);
+          // clearInterval(countdown);
           socket.off("sendTablero");
           socket.off("partyInfo");
           socket.off("realizarMovimiento");
