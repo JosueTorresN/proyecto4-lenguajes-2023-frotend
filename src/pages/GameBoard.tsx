@@ -15,6 +15,7 @@ const GameBoard = () => {
     const [partyInfo, setPartyInfo] = React.useState([]);
     const [movimientot, setMovimientot] = React.useState(0);
     const [tablero, setTablero] = React.useState([]);
+    const [timer, setTimer] = React.useState(60); // Valor inicial del cronómetro en segundos
     
     const mandarMovimiento = (movimiento: number) => {
       // audio.play();
@@ -55,6 +56,8 @@ const GameBoard = () => {
       }
       return true;
     };
+
+
 
     const buttons = createBTN();
 
@@ -100,9 +103,25 @@ const GameBoard = () => {
       setPartyInfo(lista);
     };
 
+
     React.useEffect(() => {
-        socket.emit("partyInfo", {roomName: 'room1'});
-        socket.emit("sendTablero", {roomName: 'room1'});
+        // Función que se ejecuta cada segundo
+        const countdown = setInterval(() => {
+          if (timer > 0) {
+            setTimer(timer - 1);
+          } else {
+            clearInterval(countdown);
+            // socket.emit("finishGame", {roomName: 'room1',jugadores: partyInfo});
+            // Aquí puedes mostrar el mensaje cuando el cronómetro llega a cero
+            alert('¡Tiempo agotado!');
+          }
+        }, 1000);
+
+        const extraerDatos = () => {
+          
+          socket.emit("partyInfo", {roomName: 'room1'});
+          socket.emit("sendTablero", {roomName: 'room1'});
+        }
         socket.on("sendTablero", (data) => {
             // console.log(data);
             setTablero(data);
@@ -124,11 +143,12 @@ const GameBoard = () => {
             setTablero(data.data)
         });
         return () => {
-            // socket.off("sendTablero");
-            // socket.off("partyInfo");
-            // socket.off("realizarMovimiento");
+          clearInterval(countdown);
+          socket.off("sendTablero");
+          socket.off("partyInfo");
+          socket.off("realizarMovimiento");
         }
-    }, []);
+    }, [timer]);
 
     return(
         <div className="gameboar-main-container">
@@ -136,6 +156,7 @@ const GameBoard = () => {
                 <h1>Game Board</h1>
             </div>
             <div className="list-name-players">
+              <div>{timer} segundos</div>
                 {partyInfo.map((player: partyInfo) => (
                     <div className="player-name" key={player.idJugador}>
                         <p>{player.nombre}: {player.puntos}</p>
