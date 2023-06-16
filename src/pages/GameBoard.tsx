@@ -96,6 +96,10 @@ const GameBoard = () => {
         }
     };
 
+    const cambiarPuntas = (lista: any) => {
+      setPartyInfo(lista);
+    };
+
     React.useEffect(() => {
         socket.emit("partyInfo", {roomName: 'room1'});
         socket.emit("sendTablero", {roomName: 'room1'});
@@ -111,6 +115,7 @@ const GameBoard = () => {
         socket.on("realizarMovimiento", (data) => {
             console.log("realizarMovimiento: ",data);
             setTablero(data.data);
+            cambiarPuntas(data.jugadores);
             setBloquer(true);
             ponerColor(data.data);
         });
