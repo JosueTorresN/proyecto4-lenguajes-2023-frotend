@@ -18,6 +18,9 @@ function App() {
             <Route path=":name/opciones-juego"  element={<OpcionesJuego />} />
             <Route path=":name/game-board"  element={<GameBoard />} />
             <Route path=":name/union-game"  element={<UnircePartida />} />
+            {/* <Route path=":name/game-board">
+              <Route path=":room"  element={<GameBoard />} />
+            </Route> */}
           </Route>
 
         </Routes>

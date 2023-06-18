@@ -9,6 +9,7 @@ const UnircePartida = () => {
 
     const enviarDatos = () => {
         socket.emit('unionParty', {nombre: name, roomName: nombre});
+        localStorage.setItem('roomName', nombre);
         setPass(true);
     }
 

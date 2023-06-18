@@ -16,6 +16,7 @@ const GameBoard = () => {
     const [movimientot, setMovimientot] = React.useState(0);
     const [tablero, setTablero] = React.useState([]);
     const [timer, setTimer] = React.useState(60); // Valor inicial del cronómetro en segundos
+    const [roomName] = React.useState(localStorage.getItem('roomName')); // Valor inicial del cronómetro en segundos
     
     const mandarMovimiento = (movimiento: number) => {
       // audio.play();
@@ -103,13 +104,14 @@ const GameBoard = () => {
       setPartyInfo(lista);
     };
 
-    const extraerDatos = () => {
-          
-      socket.emit("partyInfo", {roomName: 'room1'});
-      socket.emit("sendTablero", {roomName: 'room1'});
-    }
 
     React.useEffect(() => {
+        const extraerDatos = () => {
+            
+          socket.emit("partyInfo", {roomName: roomName});
+          socket.emit("sendTablero", {roomName: roomName});
+        }
+
         extraerDatos();
         socket.on("sendTablero", (data) => {
             // console.log(data);
@@ -132,17 +134,17 @@ const GameBoard = () => {
             setTablero(data.data)
         });
 
-          // Función que se ejecuta cada segundo
-        const countdown = setInterval(() => {
-          if (timer > 0) {
-            setTimer(timer - 1);
-          } else {
-            clearInterval(countdown);
-            // socket.emit("finishGame", {roomName: 'room1',jugadores: partyInfo});
-            // Aquí puedes mostrar el mensaje cuando el cronómetro llega a cero
-            alert('¡Tiempo agotado!');
-          }
-        }, 1000);
+        // Función que se ejecuta cada segundo
+        // const countdown = setInterval(() => {
+        //   if (timer > 0) {
+        //     setTimer(timer - 1);
+        //     console.log("Segundo: ", timer);
+        //   } else {
+        //     socket.emit("finishGame", { roomName: roomName, jugadores: partyInfo });
+        //     clearInterval(countdown);
+        //     alert("¡Tiempo agotado!");
+        //   }
+        // }, 1000);
   
         return () => {
           // clearInterval(countdown);
@@ -150,7 +152,24 @@ const GameBoard = () => {
           socket.off("partyInfo");
           socket.off("realizarMovimiento");
         }
-    }, [timer]);
+    }, [roomName]);
+    
+    React.useEffect(() => {
+      const interval = setInterval(() => {
+        if (timer > 0) {
+          setTimer(timer - 1);
+          console.log("Segundo: ", timer);
+        } else {
+          socket.emit("finishGame", { roomName: roomName, jugadores: partyInfo });
+          clearInterval(interval);
+          alert("¡Tiempo agotado!");
+        }
+      }, 1000);
+
+      return () => {
+        clearInterval(interval);
+      };
+    }, [timer, partyInfo, roomName]);
 
     return(
         <div className="gameboar-main-container">

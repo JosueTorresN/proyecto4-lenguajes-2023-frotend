@@ -2,10 +2,6 @@ import React from "react";
 import socket from "../Conecciones.js";
 import { Navigate, useParams } from "react-router-dom";
 
-// import io from "socket.io-client";
-
-// const socket = io('http://localhost:4000');
-
 socket.on('connect', () => {
     console.log('Connected to server');
 });
@@ -54,6 +50,7 @@ const OpcionesJuego = () => {
             <div>
             {pass && (
             <Navigate to={`/game/${name}/game-board`} replace={true} />
+            // <Navigate to={`/game/${name}/game-board/room1`} replace={true} />
             )}
             </div>
             <h1 className="tituloPagina">Opciones de juego</h1>
