@@ -1,6 +1,6 @@
 import React from 'react';
 import socket from "../Conecciones.js";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 
 interface partyInfo {  
     nombre: string;
@@ -10,13 +10,13 @@ interface partyInfo {
 
 const GameBoard = () => {
     const { name } = useParams();
-    // const audio = new Audio('../sounds/12745.mp3');
     const [bloquer, setBloquer] = React.useState(true);
-    const [partyInfo, setPartyInfo] = React.useState([]);
+    const [partyInfo, setPartyInfo] = React.useState([{nombre: '', idJugador: 0, puntos: 0}, {nombre: '', idJugador: 0, puntos: 0}]);
     const [movimientot, setMovimientot] = React.useState(0);
     const [tablero, setTablero] = React.useState([]);
     const [timer, setTimer] = React.useState(60); // Valor inicial del cronómetro en segundos
     const [roomName] = React.useState(localStorage.getItem('roomName')); // Valor inicial del cronómetro en segundos
+    const [navigate, setNavigate] = React.useState(false); // Valor inicial del cronómetro en segundos
     
     const mandarMovimiento = (movimiento: number) => {
       // audio.play();
@@ -104,7 +104,6 @@ const GameBoard = () => {
       setPartyInfo(lista);
     };
 
-
     React.useEffect(() => {
         const extraerDatos = () => {
             
@@ -113,6 +112,7 @@ const GameBoard = () => {
         }
 
         extraerDatos();
+
         socket.on("sendTablero", (data) => {
             // console.log(data);
             setTablero(data);
@@ -133,18 +133,11 @@ const GameBoard = () => {
             console.log("captarMovimiento: ",data);
             setTablero(data.data)
         });
-
-        // Función que se ejecuta cada segundo
-        // const countdown = setInterval(() => {
-        //   if (timer > 0) {
-        //     setTimer(timer - 1);
-        //     console.log("Segundo: ", timer);
-        //   } else {
-        //     socket.emit("finishGame", { roomName: roomName, jugadores: partyInfo });
-        //     clearInterval(countdown);
-        //     alert("¡Tiempo agotado!");
-        //   }
-        // }, 1000);
+        socket.on("finishGame", (data) => {
+          console.log("finishGame: ",data);
+          alert(`El juego ha terminado, el ganador es ${data}`);
+          setNavigate(true);
+        });
   
         return () => {
           // clearInterval(countdown);
@@ -162,9 +155,18 @@ const GameBoard = () => {
         } else {
           socket.emit("finishGame", { roomName: roomName, jugadores: partyInfo });
           clearInterval(interval);
-          alert("¡Tiempo agotado!");
+          alert(`El juego ha terminado, el ganador es ${ganador()}`);
+          setNavigate(true);
         }
       }, 1000);
+
+      const ganador = () => {
+        if (partyInfo[0].puntos > partyInfo[1].puntos) {
+          return partyInfo[0].nombre;
+        } else {
+          return partyInfo[1].nombre;
+        }
+      };
 
       return () => {
         clearInterval(interval);
@@ -185,7 +187,11 @@ const GameBoard = () => {
                 ))}
             </div>
             <div className="play-board">{buttons}</div>
-            
+            <div>
+            {navigate && (
+            <Navigate to={`/game/${name}/menu`} replace={true} />
+            )}
+          </div>
         </div>
     );
 }

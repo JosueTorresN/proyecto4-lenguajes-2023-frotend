@@ -22,7 +22,7 @@ const MenuPrincipal = () => {
             </button>
           </div>
           <div className='btnContainer'>
-            <button className="btn">
+            <button className="btn" onClick={() => navigate(`/game/${name}/ranking`)}>
               <span>Ver ranking</span>
               <div className="dot"></div>
             </button>
